@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.google.gson.JsonElement;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
@@ -74,16 +75,46 @@ public class Home extends Activity {
 
                 long unixSeconds = mm;
                 Date dd = new Date(unixSeconds*1000L); // *1000 is to convert seconds to milliseconds
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z"); // the format of your date
-                sdf.setTimeZone(TimeZone.getTimeZone("GMT-4")); // give a timezone reference for formating (see comment at the bottom
+                //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z"); // the format of your date
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy EEEE"); // the format of your date
+               // sdf.setTimeZone(TimeZone.getTimeZone("GMT-4")); // give a timezone reference for formating (see comment at the bottom
                 String formattedDate = sdf.format(dd);
+                //SimpleDateFormat day = new SimpleDateFormat("EEEE"); // the format of your date
+                // String day_mon = sdf.format(day);
                 System.out.println(formattedDate);
 
 
                 city_tv.setText(response.body().getName().toString());
-                date_tv.setText(formattedDate);
+                date_tv.setText(formattedDate +" ");
                // pressure_tv.setText();
-                //temp_tv.setText(response.body().getMains());
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(response.body().getMains().toString());
+                    String tempd = String.valueOf(jsonObject.getDouble("temp") - 273.15);
+                    temp_tv.setText(tempd.substring(0,5)+(char) 0x00B0);
+
+                    //String temp_min = String.valueOf(jsonObject.getDouble("temp_min"));
+                    String temp_min= String.valueOf(jsonObject.getDouble("temp_min") - 273.15);
+                     mintemp_tv.setText(temp_min.substring(0,2)+(char) 0x00B0);
+
+                   // String temp_max = String.valueOf(jsonObject.getDouble("temp_max"));
+                    String temp_max= String.valueOf(jsonObject.getDouble("temp_max") - 273.15);
+                     maxtemp_tv.setText(temp_max.substring(0,2)+(char) 0x00B0);
+
+                    String pressure = String.valueOf(jsonObject.getDouble("pressure"));
+                    pressure_tv.setText(pressure +"kpa");
+
+                    String humidity = String.valueOf(jsonObject.getDouble("humidity"));
+                    humidity_tv.setText("H  : "+humidity +"%");
+
+                    jsonObject = new JSONObject(response.body().getWind().toString());
+                    String wind = String.valueOf(jsonObject.getDouble("speed")*18/5);
+                    windspeed_tv.setText(wind.substring(0,2));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
 
             }
 

@@ -19,7 +19,7 @@ public class WeatherData {
     JsonElement coord;
 
     @SerializedName("main")
-    JSONObject mains;
+    JsonElement mains;
 
     @SerializedName("wind")
     JsonElement wind;
@@ -48,7 +48,7 @@ public class WeatherData {
         return wind;
     }
 
-    public JSONObject getMains() {
+    public JsonElement getMains() {
         return mains;
     }
 

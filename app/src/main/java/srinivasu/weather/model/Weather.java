@@ -20,8 +20,6 @@ public class Weather {
         this.id= id;this.main = main;this.description = description;
     }
 
-
-
     public String getId() {
         return id;
     }
