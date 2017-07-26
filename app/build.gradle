@@ -1,0 +1,36 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.jakewharton.butterknife'
+android {
+    compileSdkVersion 26
+    buildToolsVersion "25.0.3"
+    defaultConfig {
+        applicationId "srinivasu.weather"
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled true
+    }
+}
+
+dependencies {
+    def BUTTER_KNIFE_VERSION="8.5.1" //current version of butterknife
+
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:cardview-v7:26.+'
+    compile 'com.android.support:design:26.+'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor "com.jakewharton:butterknife-compiler:$BUTTER_KNIFE_VERSION"
+}
