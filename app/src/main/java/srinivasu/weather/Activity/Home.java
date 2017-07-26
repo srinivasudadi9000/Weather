@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.gson.JsonElement;
 import com.google.gson.annotations.SerializedName;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,7 +63,8 @@ public class Home extends Activity {
     TextView desc_tv;
     @BindView(R.id.res_image)
     ImageView res_image;
-
+    @BindView(R.id.sunset_tv)
+    TextView sunset_tv;
     @BindView(R.id.weather_recyler)
     RecyclerView weather_recyler;
 
@@ -104,17 +106,24 @@ public class Home extends Activity {
                 Log.d("date", response.body().getDt().toString());
                 Log.d("id", response.body().getId().toString());
 
+
+                String myimage = response.body().getMains().toString();
+
+                if (myimage.startsWith("s") || myimage.substring(0,3).equals("cle")) {
+                    Picasso.with(Home.this)
+                            .load(R.drawable.sunny)
+                            .into(res_image);
+                } else if (myimage.startsWith("r")) {
+                    Picasso.with(Home.this)
+                            .load(R.drawable.rain)
+                            .into(res_image);
+                }
                 int mm = Integer.parseInt(response.body().getDt());
 
                 long unixSeconds = mm;
                 Date dd = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
-                //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z"); // the format of your date
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy EEEE"); // the format of your date
-                // sdf.setTimeZone(TimeZone.getTimeZone("GMT-4")); // give a timezone reference for formating (see comment at the bottom
                 String formattedDate = sdf.format(dd);
-                //SimpleDateFormat day = new SimpleDateFormat("EEEE"); // the format of your date
-                // String day_mon = sdf.format(day);
-                System.out.println(formattedDate);
 
                 city_tv.setText(response.body().getName().toString());
                 date_tv.setText(formattedDate + " ");
@@ -125,11 +134,9 @@ public class Home extends Activity {
                     String tempd = String.valueOf(jsonObject.getDouble("temp") - 273.15);
                     temp_tv.setText("Temp : " + tempd.substring(0, 5) + (char) 0x00B0 + "C");
 
-                    //String temp_min = String.valueOf(jsonObject.getDouble("temp_min"));
                     String temp_min = String.valueOf(jsonObject.getDouble("temp_min") - 273.15);
                     mintemp_tv.setText("Min Temp :" + temp_min.substring(0, 2) + (char) 0x00B0 + "C");
 
-                    // String temp_max = String.valueOf(jsonObject.getDouble("temp_max"));
                     String temp_max = String.valueOf(jsonObject.getDouble("temp_max") - 273.15);
                     maxtemp_tv.setText("Max Temp :" + temp_max.substring(0, 2) + (char) 0x00B0 + "C");
 
@@ -144,6 +151,23 @@ public class Home extends Activity {
                     windspeed_tv.setText("Wind Speed :" + wind.substring(0, 2) + "Km / Hr");
 
                     Weather_Forecast_Future(response.body().getId().toString());
+
+
+                    JSONObject sunset = new JSONObject(response.body().getSys().toString());
+                    int sun =  sunset.getInt("sunrise");
+                    long unixSec = sun;
+                     Date date = new Date(unixSec * 1000L); // *1000 is to convert seconds to milliseconds
+                    SimpleDateFormat sunset_f = new SimpleDateFormat("hh:mm aa"); // the format of your date
+                    String sunset_value = sunset_f.format(date);
+
+                    int sunseti =  sunset.getInt("sunset");
+                    long unixSecset = sunseti;
+                    Date date_s = new Date(unixSecset * 1000L); // *1000 is to convert seconds to milliseconds
+                    SimpleDateFormat sunset_f_s = new SimpleDateFormat("hh:mm aa"); // the format of your date
+                    String sunset_value_s = sunset_f_s.format(date_s);
+
+
+                    sunset_tv.setText("SunRise :" +sunset_value +"\n"+"SunSet : "+sunset_value_s);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -165,7 +189,7 @@ public class Home extends Activity {
             @Override
             public void onResponse(Call<WeatherData_Future> call, Response<WeatherData_Future> response) {
                 String size = String.valueOf(response.body().getList().size());
-                Toast.makeText(getBaseContext(), size + "   " + response.body().getList().toString(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getBaseContext(), size + "   " + response.body().getList().toString(), Toast.LENGTH_SHORT).show();
                 List<WeatherData_list> weather = response.body().getList();
                 weather_recyler.setAdapter(new WeatherAdapter(weather, R.layout.weather_single, getApplicationContext()));
             }

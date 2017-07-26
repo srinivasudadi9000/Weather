@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="85dp"
+    android:layout_height="90dp"
     android:layout_marginLeft="5dp"
     android:layout_marginTop="5dp"
     android:layout_marginRight="5dp">
@@ -11,13 +11,14 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <LinearLayout
             android:background="#aaff00"
             android:orientation="vertical"
             android:layout_width="100dp"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
             <ImageView
+                android:id="@+id/weather_img"
                 android:layout_gravity="center"
                 android:layout_width="80dp"
                 android:layout_height="40dp"
@@ -35,8 +36,7 @@
                 android:id="@+id/date_stv"
                 android:gravity="center"
                 android:text="MON"
-                android:textSize="18dp"
-                android:layout_width="match_parent"
+                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout

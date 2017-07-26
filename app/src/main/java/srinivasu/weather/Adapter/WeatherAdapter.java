@@ -6,7 +6,10 @@ import android.telecom.TelecomManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +21,8 @@ import java.util.List;
 import butterknife.BindView;
 import srinivasu.weather.R;
 import srinivasu.weather.model.WeatherData_list;
+
+import static android.R.attr.value;
 
 /**
  * Created by USER on 26-07-2017.
@@ -43,6 +48,17 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherH
     @Override
     public void onBindViewHolder(WeatherHolder holder, int position) {
         holder.daydes_stv.setText(weatherData_lists.get(position).getWeather().get(0).getDescription().toString());
+        String myimage = weatherData_lists.get(position).getWeather().get(0).getMain().toLowerCase().toString();
+
+        if (myimage.startsWith("s") || myimage.substring(0,3).equals("cle")){
+            Picasso.with(context)
+                    .load(R.drawable.sunny)
+                     .into(holder.weather_img);
+        }else if (myimage.startsWith("r")){
+            Picasso.with(context)
+                    .load(R.drawable.rain)
+                    .into(holder.weather_img);
+        }
         int mm = weatherData_lists.get(position).getDt();
 
         long unixSeconds = mm;
@@ -89,7 +105,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherH
 
     public class WeatherHolder extends RecyclerView.ViewHolder {
         TextView daydes_stv, date_stv, day_stv, mintemp_stv, maxtemp_stv, night_stv, eve_stv, mor_stv;
-
+        ImageView weather_img;
         public WeatherHolder(View itemView) {
             super(itemView);
             daydes_stv = (TextView) itemView.findViewById(R.id.daydes_stv);
@@ -100,6 +116,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherH
             night_stv = (TextView) itemView.findViewById(R.id.night_stv);
             eve_stv = (TextView) itemView.findViewById(R.id.eve_stv);
             mor_stv = (TextView) itemView.findViewById(R.id.mor_stv);
+            weather_img =(ImageView)itemView.findViewById(R.id.weather_img);
         }
     }
 }

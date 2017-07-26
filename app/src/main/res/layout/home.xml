@@ -103,16 +103,23 @@
 
             <ImageView
                 android:id="@+id/res_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:src="@drawable/cloud" />
-
+            <TextView
+                android:textColor="#ffffff"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="sunset \n sunrise"
+                android:id="@+id/sunset_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/desc_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Rainy "
+                android:text="Rainy \nasdfasdfasdf"
                 android:textColor="#ffffff"
                 android:textStyle="bold" />
         </LinearLayout>
