@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="5dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:background="#aaff00"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:src="@drawable/cloud"/>
+
+            <TextView
+                android:id="@+id/daydes_stv"
+                android:gravity="center"
+                android:text="moderate rain "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/date_stv"
+                android:gravity="center"
+                android:text="MON"
+                android:textSize="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:background="#F78A1F"
+            android:layout_weight="6"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="85dp">
+            <TextView
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/day_stv"
+                android:text="Day"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp" />
+            <TextView
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/mintemp_stv"
+                android:text="Min"
+                android:layout_width="wrap_content"
+                android:layout_height="85dp" />
+            <TextView
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/maxtemp_stv"
+                android:text="Max"
+                android:layout_width="wrap_content"
+                android:layout_height="85dp" />
+
+            <TextView
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:id="@+id/night_stv"
+                android:layout_weight="1"
+                android:text="Night"
+                android:layout_width="wrap_content"
+                android:layout_height="85dp" />
+            <TextView
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/eve_stv"
+                android:text="Eve"
+                android:layout_width="wrap_content"
+                android:layout_height="85dp" />
+            <TextView
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:id="@+id/mor_stv"
+                android:layout_weight="1"
+                android:text="Mor "
+                android:layout_width="wrap_content"
+                android:layout_height="85dp" />
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>
