@@ -12,7 +12,7 @@ import java.util.List;
 public class WeatherData_list {
 
     @SerializedName("dt")
-    int main;
+    int dt;
 
     @SerializedName("temp")
     JsonElement temp;
@@ -31,9 +31,9 @@ public class WeatherData_list {
 
     @SerializedName("clouds")
     int clouds;
-    public WeatherData_list(Double speed,int main,JsonElement temp,Double pressure,int humidity,List<Weather> weather,
+    public WeatherData_list(Double speed,int dt,JsonElement temp,Double pressure,int humidity,List<Weather> weather,
                             int clouds){
-        this.speed= speed;this.main = main;this.pressure = pressure;this.weather = weather;this.humidity = humidity;
+        this.speed= speed;this.dt = dt;this.pressure = pressure;this.weather = weather;this.humidity = humidity;
         this.temp = temp;this.clouds = clouds;
     }
 
@@ -54,8 +54,8 @@ public class WeatherData_list {
         return speed;
     }
 
-    public int getMain() {
-        return main;
+    public int getDt() {
+        return dt;
     }
 
     public int getClouds() {

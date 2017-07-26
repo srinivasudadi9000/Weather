@@ -1,4 +1,4 @@
-package srinivasu.weather;
+package srinivasu.weather.Activity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -26,10 +26,12 @@ import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import srinivasu.weather.Adapter.WeatherAdapter;
+import srinivasu.weather.R;
 import srinivasu.weather.model.Weather;
 import srinivasu.weather.model.WeatherData;
 
@@ -64,6 +66,7 @@ public class Home extends Activity {
     @BindView(R.id.weather_recyler)
     RecyclerView weather_recyler;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,13 +75,18 @@ public class Home extends Activity {
 
         weather_recyler.setLayoutManager(new LinearLayoutManager(this));
 
-        Weather_Forecast();
+        Weather_Forecast(getIntent().getStringExtra("location"));
 
     }
 
-    public void Weather_Forecast(){
+    @OnClick(R.id.back_img)
+    public void onclick() {
+        finish();
+    }
+
+    public void Weather_Forecast(String location) {
         ApiInterface apiService = ApiClient.getWeatherDetails().create(ApiInterface.class);
-        Call<WeatherData> call = apiService.getWeatherDetails("visakhapatnam", "fd88bdd6c7c80026f29e94b63439011d");
+        Call<WeatherData> call = apiService.getWeatherDetails(location, "fd88bdd6c7c80026f29e94b63439011d");
 
         call.enqueue(new Callback<WeatherData>() {
             @Override
@@ -115,25 +123,25 @@ public class Home extends Activity {
                 try {
                     jsonObject = new JSONObject(response.body().getMains().toString());
                     String tempd = String.valueOf(jsonObject.getDouble("temp") - 273.15);
-                    temp_tv.setText("Temp : "+ tempd.substring(0, 5) + (char) 0x00B0 +"C");
+                    temp_tv.setText("Temp : " + tempd.substring(0, 5) + (char) 0x00B0 + "C");
 
                     //String temp_min = String.valueOf(jsonObject.getDouble("temp_min"));
                     String temp_min = String.valueOf(jsonObject.getDouble("temp_min") - 273.15);
-                    mintemp_tv.setText("Min Temp :"+temp_min.substring(0, 2) + (char) 0x00B0+"C");
+                    mintemp_tv.setText("Min Temp :" + temp_min.substring(0, 2) + (char) 0x00B0 + "C");
 
                     // String temp_max = String.valueOf(jsonObject.getDouble("temp_max"));
                     String temp_max = String.valueOf(jsonObject.getDouble("temp_max") - 273.15);
-                    maxtemp_tv.setText("Max Temp :" +temp_max.substring(0, 2) + (char) 0x00B0+"C");
+                    maxtemp_tv.setText("Max Temp :" + temp_max.substring(0, 2) + (char) 0x00B0 + "C");
 
                     String pressure = String.valueOf(jsonObject.getDouble("pressure"));
-                    pressure_tv.setText("Pressure : "+pressure + "kpa");
+                    pressure_tv.setText("Pressure : " + pressure + "kpa");
 
                     String humidity = String.valueOf(jsonObject.getDouble("humidity"));
                     humidity_tv.setText("Humidity  : " + humidity + "%");
 
                     jsonObject = new JSONObject(response.body().getWind().toString());
                     String wind = String.valueOf(jsonObject.getDouble("speed") * 18 / 5);
-                    windspeed_tv.setText("Wind Speed :"+ wind.substring(0, 2)+"Km / Hr");
+                    windspeed_tv.setText("Wind Speed :" + wind.substring(0, 2) + "Km / Hr");
 
                     Weather_Forecast_Future(response.body().getId().toString());
                 } catch (JSONException e) {
@@ -149,7 +157,7 @@ public class Home extends Activity {
 
     }
 
-    public void Weather_Forecast_Future(String id){
+    public void Weather_Forecast_Future(String id) {
         ApiInterface apiService = ApiClient.getWeatherDetails_future().create(ApiInterface.class);
         Call<WeatherData_Future> call = apiService.getWeatherDetails_future(id, "fd88bdd6c7c80026f29e94b63439011d");
 
@@ -157,14 +165,14 @@ public class Home extends Activity {
             @Override
             public void onResponse(Call<WeatherData_Future> call, Response<WeatherData_Future> response) {
                 String size = String.valueOf(response.body().getList().size());
-                Toast.makeText(getBaseContext(),size+"   "+response.body().getList().toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), size + "   " + response.body().getList().toString(), Toast.LENGTH_SHORT).show();
                 List<WeatherData_list> weather = response.body().getList();
                 weather_recyler.setAdapter(new WeatherAdapter(weather, R.layout.weather_single, getApplicationContext()));
             }
 
             @Override
             public void onFailure(Call<WeatherData_Future> call, Throwable throwable) {
-                Toast.makeText(getBaseContext(),throwable.toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), throwable.toString(), Toast.LENGTH_SHORT).show();
 
             }
         });

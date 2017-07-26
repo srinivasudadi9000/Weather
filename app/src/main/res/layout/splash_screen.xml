@@ -7,7 +7,7 @@
     android:background="@color/background"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="srinivasu.weather.SplashScreen">
+    tools:context="srinivasu.weather.Activity.SplashScreen">
 
     <ImageView
         android:layout_gravity="center"

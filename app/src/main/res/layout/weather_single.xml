@@ -15,24 +15,27 @@
         <LinearLayout
             android:background="#aaff00"
             android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content">
             <ImageView
+                android:layout_gravity="center"
                 android:layout_width="80dp"
                 android:layout_height="40dp"
                 android:src="@drawable/cloud"/>
 
             <TextView
+                android:layout_gravity="center"
                 android:id="@+id/daydes_stv"
                 android:gravity="center"
-                android:text="moderate rain "
+                android:text=" moderate rain "
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
+                android:layout_gravity="center"
                 android:id="@+id/date_stv"
                 android:gravity="center"
                 android:text="MON"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
